@@ -1,3 +1,7 @@
 export const BANNER = 'BANNER'
 export const HOTLIST = 'HOTLIST'
 export const PLAY_NUM = 'PLAY_NUM'
+export const NEW_MUSIC_LIST = 'NEW_MUSIC_LIST'
+export const SOARING_RANKING = 'SOARING_RANKING'
+export const NEW_RANKING = 'NEW_RANKING'
+export const ORIGINAL_SANKING = 'ORIGINAL_SANKING'

@@ -35,20 +35,112 @@
                 <div class="new-recommend">
                     <Headline title='新碟上架'></Headline>
                     <div class="new-recommend-wrap">
-                        <el-carousel arrow="always" indicator-position="none" height="188px">
-                            <el-carousel-item>
+                        <el-carousel :autoplay="false" arrow="hover" indicator-position="none" height="188px">
+                            <el-carousel-item v-for="(item,index) in state.new_music_list" :key="index">
                                 <ul class="new-recommend-list">
-                                    <li>
+                                    <li v-for="(item,index) in item" :key="index">
                                         <div class="new-recommend-img">
-                                            <img src="">
+                                            <img :src="item.picUrl">
                                             <p class="img-marsk"></p>
                                         </div>
-                                        <p>qqqqq</p>
-                                        <p>qqqq</p>
+                                        <p class="music_name">{{item.name}}</p>
+                                        <p class="song_name">{{item.artist.name}}</p>
                                     </li>
                                 </ul>
                             </el-carousel-item>
                         </el-carousel>
+                    </div>
+                </div>
+                <div class="ranking-wrap">
+                    <Headline title='榜单'></Headline>
+                    <div class="ranking-content">
+                        <div class="soaring-ranking">
+                            <div class="soaring-head">
+                                <div class="soaring-head-content">
+                                    <div class="head-img-wrap">
+                                        <img src="http://p4.music.126.net/DrRIg6CrgDfVLEph9SNh7w==/18696095720518497.jpg?param=100y100">
+                                        <div class="shade"></div>
+                                    </div>
+                                    <div class="ranking-info-wrap">
+                                        <p class="ranking-text">云音乐飙升榜</p>
+                                        <div class="ranking-bgc">
+                                            <div class="play-bgc"></div>
+                                            <div class="collect-bgc"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="soaring-list">
+                                <li v-for="(item,index) in state.soaring_list" :key="index" :class="index%2==0?'active-list-bgc':''">
+                                    <div class="song_name_list">
+                                        <span class="soaring-list-num" :class="index<3?'active-num':''">{{index+1}}</span>
+                                        <span class="soaring-list-songname">{{item.name}}</span>
+                                    </div>
+                                    <div class="play-bgc-wrap">
+                                        <div class="play-bgc2"></div>
+                                        <div class="collect-bgc2"></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="soaring-ranking" style="border-left: 1px solid #d2d2d2;border-right: 1px solid #d2d2d2;">
+                            <div class="soaring-head">
+                                <div class="soaring-head-content">
+                                    <div class="head-img-wrap">
+                                        <img src="http://p4.music.126.net/N2HO5xfYEqyQ8q6oxCw8IQ==/18713687906568048.jpg?param=100y100">
+                                        <div class="shade"></div>
+                                    </div>
+                                    <div class="ranking-info-wrap">
+                                        <p class="ranking-text">云音乐新歌榜</p>
+                                        <div class="ranking-bgc">
+                                            <div class="play-bgc"></div>
+                                            <div class="collect-bgc"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="soaring-list">
+                                <li v-for="(item,index) in state.new_sanking_list" :key="index" :class="index%2==0?'active-list-bgc':''">
+                                    <div class="song_name_list">
+                                        <span class="soaring-list-num" :class="index<3?'active-num':''">{{index+1}}</span>
+                                        <span class="soaring-list-songname">{{item.name}}</span>
+                                    </div>
+                                    <div class="play-bgc-wrap">
+                                        <div class="play-bgc2"></div>
+                                        <div class="collect-bgc2"></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="soaring-ranking">
+                            <div class="soaring-head">
+                                <div class="soaring-head-content">
+                                    <div class="head-img-wrap">
+                                        <img src="http://p4.music.126.net/sBzD11nforcuh1jdLSgX7g==/18740076185638788.jpg?param=100y100">
+                                        <div class="shade"></div>
+                                    </div>
+                                    <div class="ranking-info-wrap">
+                                        <p class="ranking-text">云音乐原创歌曲榜</p>
+                                        <div class="ranking-bgc">
+                                            <div class="play-bgc"></div>
+                                            <div class="collect-bgc"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="soaring-list">
+                                <li v-for="(item,index) in state.original_sanking_list" :key="index" :class="index%2==0?'active-list-bgc':''">
+                                    <div class="song_name_list">
+                                        <span class="soaring-list-num" :class="index<3?'active-num':''">{{index+1}}</span>
+                                        <span class="soaring-list-songname">{{item.name}}</span>
+                                    </div>
+                                    <div class="play-bgc-wrap">
+                                        <div class="play-bgc2"></div>
+                                        <div class="collect-bgc2"></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -65,9 +157,20 @@
         name: "recommend",
         mounted(){
             Loading.service({text:'加载中...'});
+            //是否显示子菜单
             this.$store.commit('show_children',true)
+            //banner数据
             this.$store.dispatch('banner')
+            //热门推荐
             this.$store.dispatch('hot_recommend')
+            //新碟上架
+            this.$store.dispatch('new_music_list')
+            //云音乐飙升榜
+            this.$store.dispatch('soaring_ranking')
+            //云音乐新歌榜
+            this.$store.dispatch('new_ranking')
+            //云音乐原创歌曲榜
+            this.$store.dispatch('original_sanking')
         },
         components:{
             Headline
@@ -106,12 +209,11 @@
         height: 330px;
         background-color: #fff;
         top: 0;
-        right: 357px;
+        right: 301px;
         background: url("../../assets/download.png") no-repeat;
     }
     .recommend-content{
         width: 980px;
-        height: 1000px;
         margin: 0 auto;
         display: flex;
 
@@ -200,6 +302,8 @@
     .new-recommend-list{
         width: 645px;
         margin: 28px auto 0;
+        display: flex;
+        justify-content:space-between ;
         li{
             width: 118px;
             height: 150px;
@@ -225,5 +329,156 @@
                 }
             }
         }
+    }
+    .music_name{
+        font-size: 12px;
+        color: #000;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        margin-top: 5px;
+    }
+    .song_name{
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        font-size: 12px;
+        color: #666;
+    }
+    .ranking-content{
+        width: 100%;
+        border: 1px solid #d2d2d2;
+        background-color: #F4F4F4;
+        display: flex;
+        margin-top: 20px;
+        .soaring-ranking{
+            width: 33.333%;
+            height: 100%;
+            box-sizing: border-box;
+            .soaring-head{
+                height: 100px;
+                padding: 20px 0 0 19px;
+                .soaring-head-content{
+                    width: 100%;
+                    display: flex;
+                    .head-img-wrap{
+                        position: relative;
+                        img{
+                            display: block;
+                            width: 80px;
+                            height: 80px;
+                        }
+                        .shade{
+                            width: 80px;
+                            height: 80px;
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            background: url("../../assets/hot_bgc.png") no-repeat;
+                            background-position: -145px -57px;
+                        }
+                    }
+                    .ranking-info-wrap{
+                        flex: 1;
+                        padding-left: 10px;
+                        .ranking-text{
+                            font-size: 14px;
+                            font-weight: 900;
+                        }
+                        .ranking-bgc{
+                            display: flex;
+                            margin-top: 8px;
+
+                        }
+
+                    }
+                }
+
+            }
+            .soaring-list{
+                li{
+                    position: relative;
+                    box-sizing: border-box;
+                    width: 100%;
+                    height: 32px;
+                    display: flex;
+                    align-items: center;
+                    padding-left: 30px;
+                    &:hover .play-bgc-wrap{
+                        z-index: 2;
+                    }
+                    .song_name_list{
+
+                    }
+                }
+            }
+        }
+        .new-ranking{
+            width: 33.333%;
+            height: 100%;
+        }
+        .original-ranking{
+            width: 33.333%;
+            height: 100%;
+        }
+    }
+    .play-bgc{
+        width: 22px;
+        height: 22px;
+        background: url("../../assets/new_bgc.png") no-repeat;
+        background-position: -267px -205px;
+        margin-right: 5px;
+        &:hover{
+            background-position: -267px -235px;
+        }
+    }
+    .collect-bgc{
+        width: 22px;
+        height: 22px;
+        background: url("../../assets/new_bgc.png") no-repeat;
+        background-position: -298px -205px;
+        &:hover{
+            background-position: -298px -235px;
+        }
+    }
+    .play-bgc-wrap{
+        z-index: -1;
+        position: absolute;
+        right: 10px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+    .play-bgc2{
+        width: 17px;
+        height: 17px;
+        background: url("../../assets/new_bgc.png") no-repeat;
+        background-position: -267px -268px;
+        margin-right: 5px;
+        &:hover{
+            background-position: -267px -288px;
+        }
+    }
+    .collect-bgc2{
+        width: 17px;
+        height: 17px;
+        background: url("../../assets/new_bgc.png") no-repeat;
+        background-position: -297px -268px;
+        &:hover{
+            background-position: -297px -288px;
+        }
+    }
+    .soaring-list-songname{
+        font-size: 13px;
+    }
+    .soaring-list-num{
+        font-size: 15px;
+        margin-right: 5px;
+    }
+    .active-num{
+        color: #c10d0c;
+    }
+    .active-list-bgc{
+        background-color: #e8e8e8;
     }
 </style>
