@@ -9,7 +9,8 @@ export default {
         new_music_list:[],
         soaring_list:[],
         new_sanking_list:[],
-        original_sanking_list:[]
+        original_sanking_list:[],
+        enter_singer_list:[]
     },
     mutations:{
         [types.BANNER]:(state,data)=>{
@@ -38,10 +39,15 @@ export default {
             state.soaring_list.push(...data.tracks.slice(0, 10))
         },
         [types.NEW_RANKING]:(state,data)=>{
+            state.new_sanking_list = []
             state.new_sanking_list.push(...data.tracks.slice(0, 10))
         },
         [types.ORIGINAL_SANKING]:(state,data)=>{
+            state.original_sanking_list = []
             state.original_sanking_list.push(...data.tracks.slice(0, 10))
+        },
+        [types.ENTER_SINGER]:(state,data)=>{
+            state.enter_singer_list = data
         }
     },
     getters:{
@@ -77,7 +83,6 @@ export default {
         new_ranking:({commit})=>{
             axios(`${URL}/top/list?idx=0`)
                 .then(res=>{
-                    console.log(res)
                     commit(types.NEW_RANKING,res.data.playlist)
                 })
         },
@@ -85,6 +90,12 @@ export default {
             axios(`${URL}/top/list?idx=2`)
                 .then(res=>{
                     commit(types.ORIGINAL_SANKING,res.data.playlist)
+                })
+        },
+        enter_singer_list:({commit})=>{
+            axios(`${URL}/artist/list?cat=5001&limit=5`)
+                .then(res=>{
+                    commit(types.ENTER_SINGER,res.data.artists)
                 })
         }
     }

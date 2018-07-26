@@ -35,7 +35,7 @@
     import {mapState,mapMutations,mapGetters,mapActions} from 'vuex'
     export default {
         mounted(){
-
+            this.$store.state.head.children_active = 1
         },
         computed:{
             ...mapState({

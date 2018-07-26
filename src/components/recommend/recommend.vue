@@ -144,7 +144,30 @@
                     </div>
                 </div>
             </div>
-            <div class="recommend-login"></div>
+            <div class="recommend-login">
+                <div class="recommend-login-box">
+                    <p>登录网易云音乐，可以享受无限收藏的乐趣，并且无限同步到手机</p>
+                    <div class="login-btn">用户登录</div>
+                </div>
+                <div class="enter-singer-wrap">
+                    <div class="enter-singer-head">
+                        <span class="enter-singer-text">入驻歌手</span>
+                        <span class="look-more">查看全部</span>
+                    </div>
+                    <ul class="enter-singer-list">
+                        <li v-for="(item,index) in state.enter_singer_list" :key="index">
+                            <div class="singer-img-wrap">
+                                <img :src="item.picUrl">
+                            </div>
+                            <div class="singer-info-wrap">
+                                <p class="singer-name">{{item.name}}</p>
+                                <p class="singer-intorduce"></p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="apply">申请成为网易云音乐</div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -171,6 +194,8 @@
             this.$store.dispatch('new_ranking')
             //云音乐原创歌曲榜
             this.$store.dispatch('original_sanking')
+            //入驻歌手
+            this.$store.dispatch('enter_singer_list')
         },
         components:{
             Headline
@@ -205,11 +230,11 @@
     .down-load{
         position: absolute;
         z-index: 2;
-        width: 254px;
+        width: 250px;
         height: 330px;
         background-color: #fff;
         top: 0;
-        right: 301px;
+        right: 333px;
         background: url("../../assets/download.png") no-repeat;
     }
     .recommend-content{
@@ -219,6 +244,7 @@
 
     }
     .recommend-box{
+        box-sizing: border-box;
         width: 730px;
         height: 100%;
         border-left: 1px solid #d3d3d3;
@@ -229,7 +255,38 @@
     .recommend-login{
         display: flex;
         flex: 1;
-        height: 100%;
+        flex-direction: column;
+        
+        background-color: #fff;
+        .recommend-login-box{
+            width: 100%;
+            background: url("../../assets/new_bgc.png") no-repeat;
+            height: 126px;
+            p{
+                width: 205px;
+                margin: 0 auto;
+                padding: 16px 0;
+                font-size: 12px;
+                line-height: 22px;
+            }
+            .login-btn{
+                width: 100px;
+                height: 31px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #fff;
+                font-size: 12px;
+                text-shadow: 0 1px 0 #8a060b;
+                background: url("../../assets/new_bgc.png") no-repeat;
+                background-position: 0 -195px;
+                margin: 0 auto;
+
+                &:hover{
+                    background-position: -110px -195px;
+                }
+            }
+        }
     }
     .hot-list{
         display: flex;
@@ -480,5 +537,79 @@
     }
     .active-list-bgc{
         background-color: #e8e8e8;
+    }
+    .enter-singer-wrap{
+        margin-top: 15px;
+        .enter-singer-head{
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            margin: 0 20px;
+            padding-bottom: 5px;
+            .enter-singer-text{
+                font-size: 12px;
+                color: #333;
+            }
+            .look-more{
+                font-size: 12px;
+                color: #666;
+            }
+        }
+        .enter-singer-list{
+            margin: 6px 0 14px 20px;
+            li{
+                width: 210px;
+                height: 62px;
+                background-color: #fafafa;
+                margin-top: 14px;
+                display: flex;
+                &:hover{
+                    background-color: #f2f2f2;
+                }
+                .singer-img-wrap{
+                    img{
+                        display: block;
+                        width: 62px;
+                        height: 62px;
+                    }
+                }
+                .singer-info-wrap{
+                    border: 1px solid #e9e9e9;
+                    flex: 1;
+                    padding-left: 10px;
+
+                    .singer-name{
+                        width: 90%;
+                        font-weight: bold;
+                        padding-top: 5px;
+                    }
+                    .singer-intorduce{
+                        color: #666;
+                        margin-top: 5px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        word-wrap: normal;
+                        width: 90%;
+                    }
+                }
+            }
+        }
+    }
+    .apply{
+        width: 210px;
+        height: 29px;
+        border: 1px solid #ccc;
+        margin: 0 auto;
+        border-radius: 5px;
+        background-color: #f7f7f7;
+        font-size: 13px;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:hover{
+            background-color: #fff;
+        }
     }
 </style>
