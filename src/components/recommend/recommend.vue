@@ -179,6 +179,7 @@
     export default {
         name: "recommend",
         mounted(){
+            this.$store.state.head.children_active = 0
             Loading.service({text:'加载中...'});
             //是否显示子菜单
             this.$store.commit('show_children',true)

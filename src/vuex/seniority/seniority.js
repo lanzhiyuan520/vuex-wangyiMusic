@@ -118,10 +118,14 @@ export default {
         ],
         active_seniority_num : 0,
         activeBgc:'active-bgc',
-        activeBgc2:''
+        activeBgc2:'',
+        seniority:{},
+        tools:false,
+        comments:[],
+        hotcomments:[]
     },
     mutations : {
-        [types.FEATURELIST]:(state,{index,id,flag})=>{
+        [types.FEATURELIST]:(state,{index,id,flag,data})=>{
             if (flag == 1){
                 state.active_seniority_num = index
                 state.activeBgc2 = ''
@@ -131,12 +135,30 @@ export default {
                 state.activeBgc = ''
                 state.activeBgc2 = 'active-bgc'
             }
+            state.seniority = data
+            axios(`${URL}/comment/playlist?id=${data.id}&offset=0&limit=30`)
+                .then(res=>{
+                    console.log(res)
+                    state.comments = res.data.comments
+                    state.hotcomments = res.data.hotComments
+                    console.log(state.comments)
+                })
 
+        },
+        [types.SHOW_TOOLS]:state=>{
+            state.tools = true
+        },
+        [types.HIDE_TOOLS]:state=>{
+            state.tools = false
         }
     },
     actions : {
         featureList:({commit},{index,id,flag})=>{
-            commit(types.FEATURELIST,{index,id,flag})
+            axios(`${URL}/top/list?idx=${id}`)
+                .then(res=>{
+                    Loading.service().close();
+                    commit(types.FEATURELIST,{index,id,flag,data:res.data.playlist})
+                })
         }
     }
 }
