@@ -122,10 +122,27 @@ export default {
         seniority:{},
         tools:false,
         comments:[],
-        hotcomments:[]
+        hotcomments:[],
+        song_id: null,
+        seniority_id:null,
+        offset : 0,
+        flag:null,
+        index:null,
+        commentCount:0,
+        currentPageNum:1,
+        music_info:null,
+        music_data : {},
+        translate : 'translate'
     },
     mutations : {
         [types.FEATURELIST]:(state,{index,id,flag,data})=>{
+            state.song_id = data.id
+            state.seniority_id = id
+            state.flag = flag
+            state.index = index
+            state.commentCount = data.commentCount
+            state.offset = 0
+            state.currentPageNum = 1
             if (flag == 1){
                 state.active_seniority_num = index
                 state.activeBgc2 = ''
@@ -136,12 +153,10 @@ export default {
                 state.activeBgc2 = 'active-bgc'
             }
             state.seniority = data
-            axios(`${URL}/comment/playlist?id=${data.id}&offset=0&limit=30`)
+            axios(`${URL}/comment/playlist?id=${state.song_id}&offset=${state.offset}&limit=20`)
                 .then(res=>{
-                    console.log(res)
                     state.comments = res.data.comments
                     state.hotcomments = res.data.hotComments
-                    console.log(state.comments)
                 })
 
         },
@@ -150,6 +165,30 @@ export default {
         },
         [types.HIDE_TOOLS]:state=>{
             state.tools = false
+        },
+        [types.CURRENTPAGE]:(state,{val})=>{
+            state.offset = val
+            state.currentPageNum = val+1
+
+            axios(`${URL}/comment/playlist?id=${state.song_id}&offset=${(state.offset)*20}&limit=20`)
+                .then(res=>{
+                    Loading.service().close();
+                    state.comments = res.data.comments
+                })
+        },
+        [types.PLAY_MUSIC]:(state,data)=>{
+            state.music_info.result = data
+            state.music_data = {
+                title : state.music_info.name,
+                author : state.music_info.ar[0].name,
+                src : data.url,
+                pic : state.music_info.al.picUrl
+            }
+            state.translate = 'translate'
+            setTimeout(()=>{
+                state.translate = 'translate2'
+            },2000)
+            //console.log(state.music_info)
         }
     },
     actions : {
@@ -158,6 +197,15 @@ export default {
                 .then(res=>{
                     Loading.service().close();
                     commit(types.FEATURELIST,{index,id,flag,data:res.data.playlist})
+                })
+        },
+        currentpage:({commit},{val})=>{
+            commit(types.CURRENTPAGE,{val})
+        },
+        playMusic:({commit},{id})=>{
+            axios(`${URL}/music/url?id=${id}`)
+                .then(res=>{
+                    commit(types.PLAY_MUSIC,res.data.data[0])
                 })
         }
     }

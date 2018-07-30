@@ -1,5 +1,5 @@
 <template>
-    <div class="seniority-wrap">
+    <div class="seniority-wrap" style="padding-bottom: 20px">
         <div class="seniority-content">
             <div class="seniority-list">
                 <div class="seniority-box">
@@ -101,7 +101,7 @@
                                     </div>
                                 </div>
                                 <div class="song-play-box">
-                                    <div class="play-icon"></div>
+                                    <div class="play-icon" @click="play_music(item)"></div>
                                     <div class="play-text">{{item.name}}</div>
                                     <div class="mv-icon" v-if="item.mv!=0"></div>
                                 </div>
@@ -125,7 +125,7 @@
                             <div class="seniority-info-title-left">
                                 <h3>评论</h3>
                                 <div class="comments-num-wrap">
-                                    共23233213评论
+                                    共{{state.commentCount}}评论
                                 </div>
                             </div>
                         </div>
@@ -150,7 +150,7 @@
                                         <span class="user-content">{{item.content}}</span>
                                     </div>
                                     <div class="like">
-                                        <div class="comment-time">asda</div>
+                                        <div class="comment-time">{{item.time}}</div>
                                         <div class="like-wrap">
                                             <span class="like-icon"></span>
                                             <span class="like-num">（{{item.likedCount}}）</span>
@@ -169,7 +169,7 @@
                                         <span class="user-content">{{item.content}}</span>
                                     </div>
                                     <div class="like">
-                                        <div class="comment-time">asda</div>
+                                        <div class="comment-time">{{item.time | commentsTime}}</div>
                                         <div class="like-wrap">
                                             <span class="like-icon"></span>
                                             <span class="like-num">（{{item.likedCount}}）</span>
@@ -179,7 +179,23 @@
                             </div>
                         </div>
                     </div>
+                    <div class="paging-wrap">
+                        <el-pagination
+                                background
+                                layout="prev, pager, next"
+                                :total="state.commentCount"
+                                :page-size="20"
+                                @current-change="current_page"
+                                :current-page.sync='state.currentPageNum'
+                        >
+                        </el-pagination>
+                    </div>
                 </div>
+            </div>
+        </div>
+        <div class="play-music-wrap" :class="state.translate">
+            <div class="play-content">
+                <VueAplayer v-if="state.music_info " :music='state.music_data'></VueAplayer>
             </div>
         </div>
     </div>
@@ -188,6 +204,7 @@
 <script>
     import {mapState,mapMutations,mapGetters,mapActions} from 'vuex'
     import { Loading } from 'element-ui';
+    import VueAplayer from 'vue-aplayer'
     export default {
         mounted(){
             Loading.service({text:'加载中...'});
@@ -203,12 +220,22 @@
         },
         methods:{
             ...mapMutations(['SHOW_TOOLS','HIDE_TOOLS']),
+            current_page(val){
+
+                Loading.service({text:'加载中...'});
+                val = val - 1
+                this.$store.dispatch('currentpage',{val})
+            },
             feature_list(index,id,flag){
                 this.$store.dispatch('featureList',{index,id,flag})
-                    .then(res=>{
-                        console.log('ssss')
-                    })
+            },
+            play_music(item){
+                this.$store.state.seniority.music_info = item
+                this.$store.dispatch('playMusic',{id:item.id})
             }
+        },
+        components:{
+            VueAplayer
         }
     }
 </script>
@@ -828,5 +855,37 @@
     .comment{
         width: 100%;
         padding-left: 10px;
+    }
+    .paging-wrap{
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+    }
+    .play-music-wrap{
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        /*height: 53px;*/
+        /*background: url("../../assets/playbar.png");*/
+        /*background-position:  0 0;*/
+        /*background-repeat: repeat-x;*/
+        background: rgba(0,0,0,.9);
+        /*transform: translateY(90%);*/
+        transition: all .5s linear;
+        &:hover{
+            transform: translateY(0%);
+        }
+    }
+    .play-content{
+        width: 980px;
+        height: 100%;
+        margin: 0 auto;
+    }
+    .translate{
+        transform: translateY(0%);
+    }
+    .translate2{
+        transform: translateY(90%);
     }
 </style>

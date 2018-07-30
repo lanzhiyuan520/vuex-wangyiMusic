@@ -1,3 +1,5 @@
 export const FEATURELIST = 'FEATURELIST'
 export const SHOW_TOOLS = 'SHOW_TOOLS'
 export const HIDE_TOOLS = 'HIDE_TOOLS'
+export const CURRENTPAGE = 'CURRENTPAGE'
+export const PLAY_MUSIC = 'PLAY_MUSIC'

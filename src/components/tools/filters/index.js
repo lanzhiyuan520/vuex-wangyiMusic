@@ -1,7 +1,8 @@
-import {normalTime,time} from './filters'
+import {normalTime,time,commentsTime} from './filters'
 
 
 export default{
     normalTime,
-    time
+    time,
+    commentsTime
 }

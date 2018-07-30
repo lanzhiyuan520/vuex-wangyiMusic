@@ -18,3 +18,13 @@ export const time = t=>{
     var s = oDate.getSeconds()
     return `0${ms}:${s}`
 }
+export const commentsTime = t=>{
+    var oDate = new Date()
+    oDate.setTime(t)
+    var h = oDate.getHours()
+    var ms = oDate.getMinutes()
+    h = h + ''
+    ms = ms + ''
+    ms.length==1?ms='0'+ms:ms
+    return h.length==1?`0${h}:${ms}`:`${h}:${ms}`
+}
