@@ -5,6 +5,7 @@ import head from './head/head'
 import recommend from './recommend/recommend'
 import seniority from './seniority/seniority'
 import musicList from './music_list/music_list'
+import newsong from './newsong/newsong'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -13,6 +14,7 @@ export default new Vuex.Store({
         head,
         recommend,
         seniority,
-        musicList
+        musicList,
+        newsong
     }
 })

@@ -40,8 +40,8 @@ export default {
                 path:'/index/musiclist'
             },
             {
-                title:'歌手',
-                path:'/index/singer'
+                title:'新碟上架',
+                path:'/index/newsong'
             }
         ],
         children_show:false,

@@ -93,7 +93,7 @@
                             </div>
                         </div>
                         <ul class="seniority-list-box">
-                            <li v-for="(item,index) in state.seniority.tracks">
+                            <li v-for="(item,index) in state.seniority.tracks" :class="index%2==0?'active-bgc2':''">
                                 <div class="song-index-wrap">
                                     <span class="song-index">{{index+1}}</span>
                                     <div class="song-icon-wrap">
@@ -887,5 +887,8 @@
     }
     .translate2{
         transform: translateY(90%);
+    }
+    .active-bgc2{
+        background-color: #f7f7f7;
     }
 </style>

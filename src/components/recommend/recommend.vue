@@ -8,9 +8,6 @@
                     </a>
                 </el-carousel-item>
             </el-carousel>
-            <router-link tag='div' to="/index/download">
-                <div class="down-load"></div>
-            </router-link>
         </div>
         <div class="recommend-content">
             <div class="recommend-box">
@@ -145,6 +142,9 @@
                 </div>
             </div>
             <div class="recommend-login">
+                <router-link tag='div' to="/index/download">
+                    <div class="down-load"></div>
+                </router-link>
                 <div class="recommend-login-box">
                     <p>登录网易云音乐，可以享受无限收藏的乐趣，并且无限同步到手机</p>
                     <div class="login-btn">用户登录</div>
@@ -234,8 +234,8 @@
         width: 250px;
         height: 330px;
         background-color: #fff;
-        top: 0;
-        right: 333px;
+        top: -330px;
+        right: 0;
         background: url("../../assets/download.png") no-repeat;
     }
     .recommend-content{
@@ -254,6 +254,7 @@
         background-color: #fff;
     }
     .recommend-login{
+        position: relative;
         display: flex;
         flex: 1;
         flex-direction: column;

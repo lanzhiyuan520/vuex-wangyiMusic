@@ -10,6 +10,7 @@ import Recommend from '../components/recommend/recommend'
 import Seniority from '../components/seniority/seniority'
 import Singer from '../components/singer/singer'
 import Musiclist from '../components/musiclist/musiclist'
+import Newsong from '../components/newsong/newsong'
 
 Vue.use(Router)
 
@@ -34,7 +35,7 @@ export default new Router({
           {path:'download',component:download},
           {path:'recommend',component:Recommend},
           {path:'seniority',component:Seniority},
-          {path:'singer',component:Singer},
+          {path:'newsong',component:Newsong},
           {path:'musiclist',component:Musiclist},
       ]
     }
