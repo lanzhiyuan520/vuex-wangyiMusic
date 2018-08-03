@@ -15,7 +15,7 @@
                 </div>
             </div>
             <ul class="music-list">
-                <li v-for="(item,index) in state.play_lists" :key="index">
+                <li v-for="(item,index) in state.play_lists" :key="index" @click="go_music(item)">
                     <div class="img-wrap">
                         <img :src="item.coverImgUrl">
                         <div class="mask">
@@ -69,6 +69,9 @@
                     this.$store.state.musicList.currentPageNum = 1
                 }
                 this.$store.dispatch('change_list',{tag:command,offset:offset})
+            },
+            go_music(item){
+                this.$router.push({path:'/songlist',query:{id:item.id}})
             }
         }
     }

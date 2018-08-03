@@ -10,7 +10,8 @@ export default {
         soaring_list:[],
         new_sanking_list:[],
         original_sanking_list:[],
-        enter_singer_list:[]
+        enter_singer_list:[],
+
     },
     mutations:{
         [types.BANNER]:(state,data)=>{

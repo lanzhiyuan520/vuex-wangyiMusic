@@ -188,7 +188,6 @@ export default {
             setTimeout(()=>{
                 state.translate = 'translate2'
             },2000)
-            //console.log(state.music_info)
         }
     },
     actions : {

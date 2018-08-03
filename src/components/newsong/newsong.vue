@@ -6,14 +6,24 @@
                 <ul class="hot-song-list">
                     <li v-for="(item,index) in state.song_list" :key="index">
                         <div class="hot-list-wrap">
-                            <img :src="item.picUrl" >
+                            <img :src="item.picUrl">
                             <div class="mask"></div>
-                            <div class="play-icon"></div>
                         </div>
                         <p class="song-introduce">{{item.name}}</p>
                         <p class="singer-name">{{item.artist.name}}</p>
                     </li>
                 </ul>
+                <div class="paging-wrap">
+                    <el-pagination
+                            background
+                            layout="prev, pager, next"
+                            :total="state.total"
+                            :page-size="35"
+                            @current-change="current_page"
+                            :current-page.sync='state.currentPageNum'
+                    >
+                    </el-pagination>
+                </div>
             </div>
         </div>
     </div>
@@ -26,12 +36,17 @@
         mounted(){
             this.$store.commit('show_children',true)
             this.$store.state.head.children_active = 3
-            this.$store.dispatch('hot_song',{offset:0})
+            this.$store.dispatch('hot_song',{offset:1})
         },
         computed:{
             ...mapState({
                 state:state=>state.newsong
-            })
+            }),
+        },
+        methods:{
+            current_page(val){
+                this.$store.dispatch('hot_song',{offset:val})
+            }
         }
     }
 </script>
@@ -69,7 +84,7 @@
                 height: 130px;
                 img{
                     width: 100%;
-                    height: 100%;
+
                 }
                 .mask{
                     position: absolute;
@@ -79,15 +94,6 @@
                     left: 0;
                     background: url("../../assets/hot_bgc.png") no-repeat;
                     background-position: 0 -845px;
-                }
-                .play-icon{
-                    position: absolute;
-                    width: 28px;
-                    height: 28px;
-                    bottom: 10px;
-                    right: 10px;
-                    background-position: 0 -170px;
-                    background: url("../../assets/icon6.png") no-repeat;
                 }
             }
             .song-introduce{
@@ -102,5 +108,9 @@
                 color: #666;
             }
         }
+    }
+    .paging-wrap{
+        display: flex;
+        justify-content: center;
     }
 </style>

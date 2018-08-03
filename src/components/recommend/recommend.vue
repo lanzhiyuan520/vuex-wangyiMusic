@@ -15,7 +15,7 @@
                     <Headline title='热门推荐'></Headline>
                     <div class="hot-list-wrap">
                         <ul class="hot-list">
-                            <li v-for="(item,index) in state.hot_list" :key="index" :class="index==3 || index==state.hot_list.length-1?'active-list':''">
+                            <li v-for="(item,index) in state.hot_list" :key="index" @click="go_songlist(item)" :class="index==3 || index==state.hot_list.length-1?'active-list':''">
                                 <div class="img-wrap">
                                     <div class="marsk">
                                         <span class="listen-icon"></span>
@@ -74,7 +74,7 @@
                                         <span class="soaring-list-songname">{{item.name}}</span>
                                     </div>
                                     <div class="play-bgc-wrap">
-                                        <div class="play-bgc2"></div>
+                                        <div class="play-bgc2" @click="play_music(item)"></div>
                                         <div class="collect-bgc2"></div>
                                     </div>
                                 </li>
@@ -103,7 +103,7 @@
                                         <span class="soaring-list-songname">{{item.name}}</span>
                                     </div>
                                     <div class="play-bgc-wrap">
-                                        <div class="play-bgc2"></div>
+                                        <div class="play-bgc2" @click="play_music(item)" ></div>
                                         <div class="collect-bgc2"></div>
                                     </div>
                                 </li>
@@ -132,7 +132,7 @@
                                         <span class="soaring-list-songname">{{item.name}}</span>
                                     </div>
                                     <div class="play-bgc-wrap">
-                                        <div class="play-bgc2"></div>
+                                        <div class="play-bgc2" @click="play_music(item)"></div>
                                         <div class="collect-bgc2"></div>
                                     </div>
                                 </li>
@@ -169,11 +169,17 @@
                 </div>
             </div>
         </div>
+        <div class="play-music-wrap" :class="this.$store.state.seniority.translate">
+            <div class="play-content">
+                <VueAplayer v-if="this.$store.state.seniority.music_info " :music='this.$store.state.seniority.music_data'></VueAplayer>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
     import {mapState,mapMutations,mapGetters,mapActions} from 'vuex'
+    import VueAplayer from 'vue-aplayer'
     import Headline from '../common/Headline'
     import { Loading } from 'element-ui';
     export default {
@@ -199,7 +205,8 @@
             this.$store.dispatch('enter_singer_list')
         },
         components:{
-            Headline
+            Headline,
+            VueAplayer
         },
         computed:{
             ...mapState({
@@ -208,7 +215,14 @@
             ...mapGetters([])
         },
         methods:{
-            ...mapMutations([])
+            ...mapMutations([]),
+            play_music(item){
+                this.$store.state.seniority.music_info = item
+                this.$store.dispatch('playMusic',{id:item.id})
+            },
+            go_songlist(item){
+                this.$router.push({path:'/songlist',query:{id:item.id}})
+            }
         },
         filters:{
             listen_num(count){

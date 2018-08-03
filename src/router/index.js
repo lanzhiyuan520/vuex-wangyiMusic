@@ -11,6 +11,7 @@ import Seniority from '../components/seniority/seniority'
 import Singer from '../components/singer/singer'
 import Musiclist from '../components/musiclist/musiclist'
 import Newsong from '../components/newsong/newsong'
+import SongList from '../components/songList/songList'
 
 Vue.use(Router)
 
@@ -38,6 +39,10 @@ export default new Router({
           {path:'newsong',component:Newsong},
           {path:'musiclist',component:Musiclist},
       ]
-    }
+    },
+      {
+          path : '/songlist',
+          component:SongList
+      }
   ]
 })
