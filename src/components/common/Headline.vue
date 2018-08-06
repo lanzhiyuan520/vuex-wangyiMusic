@@ -2,14 +2,26 @@
     <div class="title-wrap">
         <div class="title-content">
             <div class="title-text">{{title}}</div>
-            <div class="more">更多</div>
+            <div class="more" @click="go_more">更多</div>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        props:['title']
+        props:['title','more'],
+        methods:{
+            go_more(){
+                console.log(this.more)
+                if (this.more == 1){
+                    this.$router.push({path:'/index/musiclist'})
+                }else if (this.more == 2){
+                    this.$router.push({path:'/index/newsong'})
+                }else if (this.more == 3){
+                    this.$router.push({path:'/index/seniority'})
+                }
+            }
+        }
     }
 </script>
 

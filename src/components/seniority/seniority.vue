@@ -45,7 +45,7 @@
                             <span class="day-update">(每天更新)</span>
                         </div>
                         <div class="fun-list">
-                            <span class="play-icon">
+                            <span class="play-icon" @click="play_music">
                                 <span class="play-icon2">
                                     <em class="play-icon3"></em>
                                     播放
@@ -105,6 +105,7 @@
             this.$store.commit('show_children',true)
             //默认请求数据
             this.$store.dispatch('featureList',{index:0,id:3,flag:1})
+            this.$store.state.head.children_active = 1
         },
         computed:{
             ...mapState({
@@ -122,6 +123,10 @@
             feature_list(index,id,flag){
                 this.$store.dispatch('featureList',{index,id,flag})
             },
+            play_music(){
+                this.$store.state.seniority.music_info = this.$store.state.seniority.seniority.tracks[0]
+                this.$store.dispatch('playMusic',{id:this.$store.state.seniority.seniority.tracks[0].id})
+            }
         },
         components:{
             VueAplayer,

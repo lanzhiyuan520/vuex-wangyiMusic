@@ -12,6 +12,7 @@ import Singer from '../components/singer/singer'
 import Musiclist from '../components/musiclist/musiclist'
 import Newsong from '../components/newsong/newsong'
 import SongList from '../components/songList/songList'
+import Album from '../components/album/album'
 
 Vue.use(Router)
 
@@ -43,6 +44,10 @@ export default new Router({
       {
           path : '/songlist',
           component:SongList
+      },
+      {
+          path : '/album',
+          component:Album
       }
   ]
 })

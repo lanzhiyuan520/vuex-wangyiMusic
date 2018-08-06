@@ -3,11 +3,11 @@
         <div class="seniority-info-title">
             <div class="seniority-info-title-left">
                 <h3>歌曲列表</h3>
-                <span class="song-num">{{music.trackCount}}首歌</span>
+                <span class="song-num">{{music.trackCount?music.trackCount:music.size}}首歌</span>
             </div>
             <div class="seniority-info-title-right">
                 <span class="play-text">播放：</span>
-                <span class="play-num">{{music.playCount}}</span>
+                <span class="play-num">{{music.playCount?music.playCount:'暂无数据'}}</span>
                 <span class="play-text">次</span>
             </div>
         </div>

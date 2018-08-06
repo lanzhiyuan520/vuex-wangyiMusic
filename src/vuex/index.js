@@ -7,6 +7,7 @@ import seniority from './seniority/seniority'
 import musicList from './music_list/music_list'
 import newsong from './newsong/newsong'
 import songList from './songList/songList'
+import album from './album/album'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -17,6 +18,7 @@ export default new Vuex.Store({
         seniority,
         musicList,
         newsong,
-        songList
+        songList,
+        album
     }
 })

@@ -6,58 +6,56 @@
                 <div class="song-content">
                     <div class="song-head-info">
                         <div class="song-head-img">
-                            <img :src="state.songdetail.coverImgUrl">
+                            <img :src="state.album.picUrl">
                             <div class="msk"></div>
                         </div>
                         <div class="song-info-content">
                             <div class="song-content-title-wrap">
                                 <div class="song-bgc"></div>
-                                <div class="song-title-text">{{state.songdetail.name}}</div>
+                                <div class="song-title-text">{{state.album.name}}</div>
                             </div>
                             <div class="created">
-                                <img :src="state.songdetail.creator.avatarUrl">
-                                <div class="created-user">{{state.songdetail.creator.nickname}}</div>
-                                <div class="created-time">{{state.songdetail.createTime | created}} 创建</div>
+                                <p>歌手：{{state.album.artists[0].name}}</p>
+                            </div>
+                            <div class="faxing-time">
+                                <p>发行时间：{{state.album.publishTime | created}}</p>
+                                <p style="margin-top: 5px">发行公司：{{state.album.company}}</p>
                             </div>
                             <div class="fun-list">
-                                <span class="play-icon" @click="playmusic">
+                                <span class="play-icon">
                                     <span class="play-icon2">
                                         <em class="play-icon3"></em>
                                         播放
                                     </span>
                                 </span>
-                                    <span class="add-icon"></span>
-                                    <span class="collect-icon">
-                                    <span class="collect-icon2">({{state.songdetail.subscribedCount}})</span>
+                                <span class="add-icon"></span>
+                                <span class="collect-icon">
+                                    <span class="collect-icon2">(111)</span>
                                 </span>
-                                    <span class="share-icon">
-                                    <span class="share-icon2">({{state.songdetail.shareCount}})</span>
+                                <span class="share-icon">
+                                    <span class="share-icon2">(111)</span>
                                 </span>
-                                    <span class="down-icon">
+                                <span class="down-icon">
                                     <span class="down-icon2">下载</span>
                                 </span>
-                                    <span class="comment-icon">
-                                    <span class="comment-icon">({{state.songdetail.commentCount}})</span>
+                                <span class="comment-icon">
+                                    <span class="comment-icon">(111)</span>
                                 </span>
-                            </div>
-                            <div class="tag-list">
-                                <div class="tag-text">标签:</div>
-                                <div class="tag-item" v-for="(item,index) in state.songdetail.tags" :key="index">{{item}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="music-list" style="margin-top: 30px">
-                        <Music :music="state.songdetail"></Music>
+                        <Music :music="state.album"></Music>
                     </div>
                     <div class="comments-wrap">
-                        <Comment :comments="state.comments" :commentCount="state.commentCount" :hotcomments="state.hotcomments"></Comment>
+                        <Comment :comments="state.comments" :commentCount="state.total" :hotcomments="state.hotcomments"></Comment>
                     </div>
                 </div>
                 <div class="paging-wrap">
                     <el-pagination
                             background
                             layout="prev, pager, next"
-                            :total="state.commentCount"
+                            :total="state.total"
                             :page-size="20"
                             @current-change="current_page"
                             :current-page.sync='state.currentPageNum'
@@ -77,8 +75,8 @@
 </template>
 
 <script>
-    import Head from '../header/head'
     import {mapState,mapMutations,mapGetters,mapActions} from 'vuex'
+    import Head from '../header/head'
     import { Loading } from 'element-ui';
     import Music from '../common/MusicList'
     import Comment from '../common/comments'
@@ -86,29 +84,24 @@
     export default {
         mounted(){
             Loading.service({text:'加载中...'});
-            this.$store.commit('show_children',true)
             this.$store.state.head.children_active = 10
-            this.song_detaild(this.$route.query.id)
+            this.album_detail(this.$route.query.id)
             this.$store.state.songList.currentPageNum = 0
         },
         computed:{
             ...mapState({
-                state:state=>state.songList
+                state:state=>state.album
             })
         },
         methods:{
-              song_detaild(id){
-                  this.$store.dispatch('song_detail',{id})
-                  this.$store.dispatch('song_comments',{id,offset:1})
-              },
-              current_page(val){
-                  Loading.service({text:'加载中...'});
-                  this.$store.dispatch('song_comments',{id:this.$route.query.id,offset:val})
-              },
-              playmusic(){
-                  this.$store.state.seniority.music_info = this.$store.state.songList.songdetail.tracks[0]
-                  this.$store.dispatch('playMusic',{id:this.$store.state.songList.songdetail.tracks[0].id})
-              }
+            album_detail(id){
+                this.$store.dispatch('ablum_detail',{id})
+                this.$store.dispatch('album_comments',{id,offset:1})
+            },
+            current_page(val){
+                Loading.service({text:'加载中...'});
+                this.$store.dispatch('album_comments',{id:this.$route.query.id,offset:val})
+            }
         },
         components:{
             Head,
@@ -171,7 +164,7 @@
             width: 58px;
             height: 24px;
             background: url("../../assets/icon1.png") no-repeat;
-            background-position: 0 -243px;
+            background-position: 0 -186px;
             margin-right: 10px;
             margin-top: 5px;
         }
@@ -182,19 +175,10 @@
     .created{
         display: flex;
         align-items: center;
-        margin-bottom: 20px;
-        img{
-            width: 35px;
-            height: 35px;
-        }
-        .created-user{
+        margin-bottom: 5px;
+        p{
             font-size: 12px;
-            color: #0c73c2;
-            margin:0 15px 0 10px;
-        }
-        .created-time{
-            font-size: 12px;
-            color: #999;
+            color: #666;
         }
     }
     .fun-list{
@@ -369,5 +353,11 @@
     .paging-wrap{
         display: flex;
         justify-content: center;
+    }
+    .faxing-time{
+        p{
+            font-size: 12px;
+            color: #666;
+        }
     }
 </style>

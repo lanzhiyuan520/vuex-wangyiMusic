@@ -4,7 +4,7 @@
             <div class="new-song-list-wrap">
                 <div class="new-song-title">全部新碟</div>
                 <ul class="hot-song-list">
-                    <li v-for="(item,index) in state.song_list" :key="index">
+                    <li v-for="(item,index) in state.song_list" :key="index" @click="go_album(item)">
                         <div class="hot-list-wrap">
                             <img :src="item.picUrl">
                             <div class="mask"></div>
@@ -37,6 +37,7 @@
             this.$store.commit('show_children',true)
             this.$store.state.head.children_active = 3
             this.$store.dispatch('hot_song',{offset:1})
+            this.$store.state.newsong.currentPageNum =1
         },
         computed:{
             ...mapState({
@@ -46,6 +47,13 @@
         methods:{
             current_page(val){
                 this.$store.dispatch('hot_song',{offset:val})
+            },
+            go_album(item){
+                console.log(item)
+                this.$router.push({
+                    path : '/album',
+                    query:{id:item.id}
+                })
             }
         }
     }

@@ -20,7 +20,6 @@ export default {
             Loading.service({text:'加载中...'});
             axios(`${URL}/top/album?offset=${(offset-1)*35}&limit=35`)
                 .then(res=>{
-                    console.log(res)
                     commit('hotSong',res.data)
                 })
         }

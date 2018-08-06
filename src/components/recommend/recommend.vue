@@ -12,7 +12,7 @@
         <div class="recommend-content">
             <div class="recommend-box">
                 <div class="hot-recommend">
-                    <Headline title='热门推荐'></Headline>
+                    <Headline title='热门推荐' :more="1"></Headline>
                     <div class="hot-list-wrap">
                         <ul class="hot-list">
                             <li v-for="(item,index) in state.hot_list" :key="index" @click="go_songlist(item)" :class="index==3 || index==state.hot_list.length-1?'active-list':''">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="new-recommend">
-                    <Headline title='新碟上架'></Headline>
+                    <Headline title='新碟上架' :more="2"></Headline>
                     <div class="new-recommend-wrap">
                         <el-carousel :autoplay="false" arrow="hover" indicator-position="none" height="188px">
                             <el-carousel-item v-for="(item,index) in state.new_music_list" :key="index">
@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="ranking-wrap">
-                    <Headline title='榜单'></Headline>
+                    <Headline title='榜单' :more="3"></Headline>
                     <div class="ranking-content">
                         <div class="soaring-ranking">
                             <div class="soaring-head">
