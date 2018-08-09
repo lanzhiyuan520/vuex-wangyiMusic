@@ -13,12 +13,15 @@ import Musiclist from '../components/musiclist/musiclist'
 import Newsong from '../components/newsong/newsong'
 import SongList from '../components/songList/songList'
 import Album from '../components/album/album'
-
+import Play_mv from '../components/playmv/playmv'
 Vue.use(Router)
 
 export default new Router({
   mode:'history',
   linkActiveClass: 'active',
+    scrollBehavior (to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    },
   routes: [
       {
           path:'/',
@@ -48,6 +51,10 @@ export default new Router({
       {
           path : '/album',
           component:Album
+      },
+      {
+          path : '/playmv',
+          component:Play_mv
       }
   ]
 })

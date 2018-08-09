@@ -15,8 +15,11 @@
                     视频投稿
                 </div>
             </div>
-            <div class="login-wrap">
-                <div class="login-text">登录</div>
+            <div class="login-wrap2">
+                <div class="login-text2" @click="login" v-if="!this.$store.state.login.login">登录</div>
+                <div class="user-img" v-if="this.$store.state.login.login">
+                    <img :src="this.$store.state.login.login.profile.avatarUrl">
+                </div>
             </div>
         </div>
         <div class="children-nav">
@@ -28,11 +31,13 @@
                 </li>
             </ul>
         </div>
+        <Login v-if="this.$store.state.mymusic.state"></Login>
     </div>
 </template>
 
 <script>
     import {mapState,mapMutations,mapGetters,mapActions} from 'vuex'
+    import Login from '../common/login'
     export default {
         mounted(){
             this.$store.state.head.children_active = 1
@@ -54,7 +59,13 @@
             change_parent_nav(path,index){
                 this.$router.push(path)
                 this.$store.commit('change_parent_tab',index)
+            },
+            login(){
+                this.$store.commit('loginState',{flag:1})
             }
+        },
+        components:{
+            Login
         }
     }
 </script>
@@ -163,14 +174,21 @@
         align-items: center;
         margin-left: 20px;
     }
-    .login-wrap{
+    .login-wrap2{
         position: relative;
         display: flex;
         align-items: center;
         margin-left: 30px;
-        .login-text{
+        .login-text2{
             font-size: 10px;
             color: #787878;
+        }
+    }
+    .user-img{
+        img{
+            width:30px ;
+            height: 30px;
+            border-radius: 50%;
         }
     }
 </style>

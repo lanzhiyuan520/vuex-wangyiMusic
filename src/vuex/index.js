@@ -8,6 +8,9 @@ import musicList from './music_list/music_list'
 import newsong from './newsong/newsong'
 import songList from './songList/songList'
 import album from './album/album'
+import playmv from './playmv/playmv'
+import mymusic from './mymusic/mymusic'
+import login from './login/login'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -19,6 +22,9 @@ export default new Vuex.Store({
         musicList,
         newsong,
         songList,
-        album
+        album,
+        playmv,
+        mymusic,
+        login
     }
 })

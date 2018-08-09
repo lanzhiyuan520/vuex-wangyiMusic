@@ -35,7 +35,7 @@
                     <div class="song-play-box">
                         <div class="play-icon" @click="play_music(item)"></div>
                         <div class="play-text">{{item.name}}</div>
-                        <div class="mv-icon" v-if="item.mv!=0"></div>
+                        <div class="mv-icon" v-if="item.mv!=0" @click="play_mv(item)"></div>
                     </div>
                     <div class="song-duration-box">
                         <span class="song-duration-text">{{item.dt | time}}</span>
@@ -63,6 +63,12 @@
             play_music(item){
                 this.$store.state.seniority.music_info = item
                 this.$store.dispatch('playMusic',{id:item.id})
+            },
+            play_mv(item){
+                this.$router.push({
+                    path:"/playmv",
+                    query:{id:item.mv}
+                })
             }
         }
     }
