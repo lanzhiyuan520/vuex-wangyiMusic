@@ -19,6 +19,10 @@
                 <div class="login-text2" @click="login" v-if="!this.$store.state.login.login">登录</div>
                 <div class="user-img" v-if="this.$store.state.login.login">
                     <img :src="this.$store.state.login.login.profile.avatarUrl">
+                    <div class="menu">
+                        <div>切换账号</div>
+                        <div @click="quit_login">退出</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -31,7 +35,6 @@
                 </li>
             </ul>
         </div>
-        <Login v-if="this.$store.state.mymusic.state"></Login>
     </div>
 </template>
 
@@ -57,11 +60,19 @@
                 this.$store.commit('change_tab',index)
             },
             change_parent_nav(path,index){
-                this.$router.push(path)
-                this.$store.commit('change_parent_tab',index)
+                if (path.toString().slice(0,1) == '/'){
+                    this.$router.push(path)
+                    this.$store.commit('change_parent_tab',index)
+                } else {
+                    window.location.href = path
+                }
+
             },
             login(){
                 this.$store.commit('loginState',{flag:1})
+            },
+            quit_login(){
+                this.$store.commit('quit_login')
             }
         },
         components:{
@@ -80,6 +91,30 @@
         height: 100%;
         margin: 0 auto;
         display: flex;
+    }
+    .menu{
+        position: absolute;
+        width: 80px;
+        background-color: #242424;
+        left: -75%;
+        z-index: 3;
+        max-height: 0;
+        overflow: hidden;
+        transition: all .2s linear;
+        div{
+            color: #ccc;
+            font-size: 12px;
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &:hover{
+                color: #fff;
+            }
+        }
+        &:hover{
+            max-height: 100px;
+        }
     }
     .logo{
         width: 176px;
@@ -189,6 +224,9 @@
             width:30px ;
             height: 30px;
             border-radius: 50%;
+        }
+        &:hover .menu{
+            max-height: 100px;
         }
     }
 </style>

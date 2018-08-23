@@ -7,7 +7,6 @@
             </div>
         </div>
         <div class="login" v-if="this.$store.state.login.login">已登录</div>
-        <Login v-if="state.state"></Login>
     </div>
 </template>
 

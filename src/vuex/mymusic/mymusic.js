@@ -6,13 +6,7 @@ export default {
         state:false
     },
     mutations : {
-        loginState:(state,{flag})=>{
-            if (flag){
-                state.state = true
-            }else{
-                state.state = false
-            }
-        }
+
     },
     actions : {
 

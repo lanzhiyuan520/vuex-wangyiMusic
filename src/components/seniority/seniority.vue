@@ -84,11 +84,6 @@
                 </div>
             </div>
         </div>
-        <div class="play-music-wrap" :class="state.translate">
-            <div class="play-content">
-                <VueAplayer v-if="state.music_info " :music='state.music_data'></VueAplayer>
-            </div>
-        </div>
     </div>
 </template>
 
@@ -115,7 +110,6 @@
         methods:{
             ...mapMutations(['SHOW_TOOLS','HIDE_TOOLS']),
             current_page(val){
-
                 Loading.service({text:'加载中...'});
                 val = val - 1
                 this.$store.dispatch('currentpage',{val})
@@ -124,8 +118,8 @@
                 this.$store.dispatch('featureList',{index,id,flag})
             },
             play_music(){
-                this.$store.state.seniority.music_info = this.$store.state.seniority.seniority.tracks[0]
-                this.$store.dispatch('playMusic',{id:this.$store.state.seniority.seniority.tracks[0].id})
+                this.$store.state.common.music_info = this.$store.state.seniority.seniority.tracks[0]
+                this.$store.dispatch('play_music',{id:this.$store.state.seniority.seniority.tracks[0].id})
             }
         },
         components:{
@@ -426,12 +420,7 @@
         left: 0;
         bottom: 0;
         width: 100%;
-        /*height: 53px;*/
-        /*background: url("../../assets/playbar.png");*/
-        /*background-position:  0 0;*/
-        /*background-repeat: repeat-x;*/
         background: rgba(0,0,0,.9);
-        /*transform: translateY(90%);*/
         transition: all .5s linear;
         &:hover{
             transform: translateY(0%);

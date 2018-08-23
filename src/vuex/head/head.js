@@ -10,20 +10,16 @@ export default {
                 path:'/index/myMusic',
             },
             {
-                title:'朋友',
-                path:'/index/friends',
-            },
-            {
                 title:'商城',
-                path:'/index/store',
+                path:'https://music.163.com/store/product',
             },
             {
                 title:'音乐人',
-                path:'/index/musicpeople',
+                path:'https://music.163.com/nmusician/web/index',
             },
             {
                 title:'下载客户端',
-                path:'/index/download',
+                path:'https://music.163.com/#/download',
             }
          ],
         children_nav:[

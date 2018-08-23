@@ -11,7 +11,7 @@ export default {
         new_sanking_list:[],
         original_sanking_list:[],
         enter_singer_list:[],
-
+        login_text:'登录'
     },
     mutations:{
         [types.BANNER]:(state,data)=>{

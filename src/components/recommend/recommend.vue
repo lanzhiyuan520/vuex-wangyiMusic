@@ -147,7 +147,7 @@
                 </router-link>
                 <div class="recommend-login-box">
                     <p>登录网易云音乐，可以享受无限收藏的乐趣，并且无限同步到手机</p>
-                    <div class="login-btn">用户登录</div>
+                    <div class="login-btn" @click="login">{{this.$store.state.login.login_text}}</div>
                 </div>
                 <div class="enter-singer-wrap">
                     <div class="enter-singer-head">
@@ -169,11 +169,7 @@
                 </div>
             </div>
         </div>
-        <div class="play-music-wrap" :class="this.$store.state.seniority.translate">
-            <div class="play-content">
-                <VueAplayer v-if="this.$store.state.seniority.music_info " :music='this.$store.state.seniority.music_data'></VueAplayer>
-            </div>
-        </div>
+
     </div>
 </template>
 
@@ -203,6 +199,13 @@
             this.$store.dispatch('original_sanking')
             //入驻歌手
             this.$store.dispatch('enter_singer_list')
+            //判断是否登录
+            if (this.$store.state.login.login){
+                this.$store.state.login.login_text = '已登录'
+            } else {
+                this.$store.state.login.login_text = '登录'
+            }
+
         },
         components:{
             Headline,
@@ -217,11 +220,17 @@
         methods:{
             ...mapMutations([]),
             play_music(item){
-                this.$store.state.seniority.music_info = item
-                this.$store.dispatch('playMusic',{id:item.id})
+                this.$store.state.common.music_info = item
+                this.$store.dispatch('play_music',{id:item.id})
             },
             go_songlist(item){
                 this.$router.push({path:'/songlist',query:{id:item.id}})
+            },
+            login(){
+                if (this.$store.state.login.login_text == '已登录'){
+                    return
+                }
+                this.$store.commit('loginState',{flag:1})
             }
         },
         filters:{

@@ -125,7 +125,11 @@
         height: 370px;
     }
     .video-box2{
-        transform: translate(690px,-155px);
+        transform: translate(100px,0);
+        width: 30%;
+        top: 0;
+        right: 10%;
+
     }
     .paging-wrap{
         display: flex;

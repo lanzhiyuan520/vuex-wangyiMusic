@@ -61,8 +61,10 @@
         props:['music'],
         methods:{
             play_music(item){
-                this.$store.state.seniority.music_info = item
-                this.$store.dispatch('playMusic',{id:item.id})
+                // this.$store.state.seniority.music_info = item
+                this.$store.state.common.music_info = item
+                this.$store.dispatch('play_music',{id:item.id})
+                // this.$store.dispatch('playMusic',{id:item.id})
             },
             play_mv(item){
                 this.$router.push({

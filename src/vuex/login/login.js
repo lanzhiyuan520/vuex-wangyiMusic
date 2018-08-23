@@ -1,13 +1,15 @@
 import axios from 'axios'
 const URL  = 'http://localhost:3000'
-import { Loading } from 'element-ui';
+import { Loading ,Notification} from 'element-ui';
 export default {
     state : {
         checked : false,
         phone : null,
         pass : null,
         hint : '',
-        login:false
+        login:false,
+        state : false,
+        login_text : '登录'
     },
     mutations : {
         change_phone:(state,val)=>{
@@ -36,11 +38,37 @@ export default {
         },
         login_success:(state,{data})=>{
             state.login = data
+            if (state.checked) {
+                var pass = window.btoa(state.pass)
+                console.log(pass)
+                var data = {
+                    phone : state.phone,
+                    pass
+                }
+                localStorage.setItem('login',JSON.stringify(data))
+            }
+            state.login_text = '已登录'
+        },
+        loginState:(state,{flag})=>{
+            if (flag){
+                state.state = true
+            }else{
+                state.state = false
+            }
+        },
+        quit_login:(state)=>{
+            state.login = false
+            state.login_text = '登录'
+            localStorage.removeItem('login')
+            Notification({
+                title : ' 退出成功',
+                type : 'success',
+                duration : '2000'
+            })
         }
     },
     actions : {
         login:({commit,state})=>{
-            console.log(111)
             var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
             if (!state.phone){
                 commit('login',{flag:1})
@@ -57,8 +85,22 @@ export default {
             commit('login',{flag:4})
             axios(`${URL}/login/cellphone?phone=${state.phone}&password=${state.pass}`)
                 .then(res=>{
-                    commit('loginState',{flag:0})
-                    commit('login_success',{data:res.data})
+                    console.log(res)
+                    if (res.data.code == '200'){
+                        Notification({
+                            title : ' 登录成功',
+                            type : 'success',
+                            duration : '2000'
+                        })
+                        commit('loginState',{flag:0})
+                        commit('login_success',{data:res.data})
+                    } else {
+                        Notification({
+                            title : res.data.msg,
+                            type : 'error',
+                            duration : '2000'
+                        })
+                    }
                 })
         }
     }

@@ -67,7 +67,6 @@
             </div>
             <div class="song-right"></div>
         </div>
-
         <div class="play-music-wrap" :class="this.$store.state.seniority.translate">
             <div class="play-content">
                 <VueAplayer v-if="this.$store.state.seniority.music_info " :music='this.$store.state.seniority.music_data'></VueAplayer>
