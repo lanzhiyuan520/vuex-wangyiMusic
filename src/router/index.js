@@ -9,6 +9,7 @@ import Newsong from '../components/newsong/newsong'
 import SongList from '../components/songList/songList'
 import Album from '../components/album/album'
 import Play_mv from '../components/playmv/playmv'
+import Search from '../components/search/search'
 Vue.use(Router)
 
 export default new Router({
@@ -46,6 +47,10 @@ export default new Router({
       {
           path : '/playmv',
           component:Play_mv
+      },
+      {
+          path:'/search',
+          component:Search
       }
   ]
 })

@@ -7,7 +7,7 @@
             </ul>
             <div class="search-wrap">
                 <div class="search-content">
-                    <input type="text" placeholder="音乐/视频/电台/用户" class="_search">
+                    <input type="text" placeholder="音乐/视频/电台/用户" class="_search" :value="state.search_text" @input="change_text" @keyup.enter="search">
                 </div>
             </div>
             <div class="video-contribute-wrap">
@@ -52,6 +52,7 @@
                 children_show:state=>state.head.children_show,
                 children_active:state=>state.head.children_active,
                 parent_active:state=>state.head.parent_active,
+                state:state=>state.head
             })
         },
         methods:{
@@ -76,6 +77,17 @@
             },
             change_login(){
                 this.$store.commit('change_login')
+            },
+            change_text(e){
+                this.$store.commit('change_text',{val:e.target.value})
+            },
+            search(){
+                this.$router.push({
+                    path : '/search',
+                    query:{
+                        search_text:this.$store.state.head.search_text
+                    }
+                })
             }
         },
         components:{

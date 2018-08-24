@@ -43,7 +43,8 @@ export default {
         children_show:false,
         children_active : 0,
         parent_active : 0,
-        p : 'static'
+        p : 'static',
+        search_text : ''
     },
     mutations:{
         show_children:(state,status)=>{
@@ -54,6 +55,9 @@ export default {
         },
         change_parent_tab:(state,index)=>{
             state.parent_active = index
+        },
+        change_text:(state,{val})=>{
+            state.search_text = val
         }
     },
     getters:{

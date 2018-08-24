@@ -8,17 +8,30 @@ export default {
         music_data:{},
         translate : 'translate',
         state : false,
-        comment_content:''
+        comment_content:'',
+        search_v : '',
+        music_list:[]
     },
     mutations : {
         play_music:(state,{data})=>{
             state.music_info.result = data
-            state.music_data = {
-                title : state.music_info.name,
-                author : state.music_info.ar[0].name,
-                src : data.url,
-                pic : state.music_info.al.picUrl
+            console.log(state.music_info)
+            if (state.music_info.artists){
+                state.music_data = {
+                    title : state.music_info.name,
+                    author : state.music_info.artists[0].name,
+                    src : data.url,
+                    pic : state.music_info.artists[0].img1v1Url
+                }
+            } else {
+                state.music_data = {
+                    title : state.music_info.name,
+                    author : state.music_info.ar[0].name,
+                    src : data.url,
+                    pic : state.music_info.al.picUrl
+                }
             }
+
             state.translate = 'translate'
             setTimeout(()=>{
                 state.translate = 'translate2'
@@ -43,6 +56,12 @@ export default {
                 type : 'error',
                 duration : '2000'
             })
+        },
+        search:(state,{data})=>{
+            state.music_list = data
+        },
+        change_text:(state,{val})=>{
+            state.search_v = val
         }
     },
     actions : {
@@ -50,6 +69,12 @@ export default {
             axios(`${URL}/music/url?id=${id}`)
                 .then(res=>{
                     commit('play_music',{data:res.data.data[0]})
+                })
+        },
+        search:({commit},{keywords})=>{
+            axios(`${URL}/search?keywords=${keywords}`)
+                .then(res=>{
+                    commit('search',{data:res.data.result})
                 })
         }
     }
