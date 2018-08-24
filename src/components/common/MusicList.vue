@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="song-play-box">
-                        <div class="play-icon" @click="play_music(item)"></div>
+                        <div class="play-icon" @click="play_music(item,index)"></div>
                         <div class="play-text">{{item.name}}</div>
                         <div class="mv-icon" v-if="item.mv!=0" @click="play_mv(item)"></div>
                     </div>
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                     <div class="song-play-box">
-                        <div class="play-icon" @click="play_music(item)"></div>
+                        <div class="play-icon" @click="play_music(item,index)"></div>
                         <div class="play-text">{{item.name}}</div>
                         <div class="mv-icon" v-if="item.mvid!=0" @click="play_mv(item)"></div>
                     </div>
@@ -87,11 +87,14 @@
     import {mapState,mapMutations,mapGetters,mapActions} from 'vuex'
     export default {
         props:['music','flag'],
+        mounted(){
+
+        },
         methods:{
-            play_music(item){
+            play_music(item,index){
                 // this.$store.state.seniority.music_info = item
                 this.$store.state.common.music_info = item
-                this.$store.dispatch('play_music',{id:item.id})
+                this.$store.dispatch('play_music',{id:item.id,index,item})
                 // this.$store.dispatch('playMusic',{id:item.id})
             },
             play_mv(item){

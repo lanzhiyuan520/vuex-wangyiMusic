@@ -10,12 +10,16 @@ export default {
         state : false,
         comment_content:'',
         search_v : '',
-        music_list:[]
+        music_list:[],
+        index : 0,
+        songs : []
     },
     mutations : {
-        play_music:(state,{data})=>{
+        play_music:(state,{data,index})=>{
             state.music_info.result = data
+            state.index = index
             console.log(state.music_info)
+            state.translate = 'translate'
             if (state.music_info.artists){
                 state.music_data = {
                     title : state.music_info.name,
@@ -32,7 +36,6 @@ export default {
                 }
             }
 
-            state.translate = 'translate'
             setTimeout(()=>{
                 state.translate = 'translate2'
             },2000)
@@ -59,16 +62,17 @@ export default {
         },
         search:(state,{data})=>{
             state.music_list = data
+            state.songs = data
         },
         change_text:(state,{val})=>{
             state.search_v = val
         }
     },
     actions : {
-        play_music:({commit},{id})=>{
+        play_music:({commit},{id,index})=>{
             axios(`${URL}/music/url?id=${id}`)
                 .then(res=>{
-                    commit('play_music',{data:res.data.data[0]})
+                    commit('play_music',{data:res.data.data[0],index})
                 })
         },
         search:({commit},{keywords})=>{

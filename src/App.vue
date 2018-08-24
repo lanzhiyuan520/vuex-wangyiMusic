@@ -3,7 +3,7 @@
     <router-view/>
     <div class="play-music-wrap" :class="state.translate">
       <div class="play-content">
-        <VueAplayer v-if="state.music_info.result " :music='state.music_data'></VueAplayer>
+        <VueAplayer ref="au" autoplay v-if="state.music_info.result " :music='state.music_data' @ended="fun"></VueAplayer>
       </div>
     </div>
     <Login v-if="this.$store.state.login.state"></Login>
@@ -31,6 +31,16 @@ export default {
         ...mapState({
             state:state=>state.common
         })
+    },
+    methods:{
+        fun(){
+            console.log(this.$refs.au)
+            var index = this.$store.state.common.index
+            console.log(this.$store.state.common.songs.songs)
+            var id = this.$store.state.common.songs.songs[index+1].id
+            console.log(id)
+            this.$store.dispatch('play_music',{id,index:index+1})
+        }
     },
     components:{
         VueAplayer,
