@@ -3,7 +3,7 @@
         <div class="banner-wrap">
             <el-carousel height="330px">
                 <el-carousel-item v-for="(item,index) in state.banner_list" :key="index" :style="'background: url('+item.backgroundUrl+')'">
-                    <a :href="item.url" style="display:inline-block;margin-right: 250px" >
+                    <a :href="item.url" target="_blank" style="display:inline-block;margin-right: 250px" >
                         <img :src="item.picUrl" style="">
                     </a>
                 </el-carousel-item>
@@ -35,7 +35,7 @@
                         <el-carousel :autoplay="false" arrow="hover" indicator-position="none" height="188px">
                             <el-carousel-item v-for="(item,index) in state.new_music_list" :key="index">
                                 <ul class="new-recommend-list">
-                                    <li v-for="(item,index) in item" :key="index">
+                                    <li v-for="(item,index) in item" :key="index" @click="go_album(item)">
                                         <div class="new-recommend-img">
                                             <img :src="item.picUrl">
                                             <p class="img-marsk"></p>
@@ -142,9 +142,9 @@
                 </div>
             </div>
             <div class="recommend-login">
-                <router-link tag='div' to="/index/download">
+                <a href="https://music.163.com/#/download" target="_blank">
                     <div class="down-load"></div>
-                </router-link>
+                </a>
                 <div class="recommend-login-box">
                     <p>登录网易云音乐，可以享受无限收藏的乐趣，并且无限同步到手机</p>
                     <div class="login-btn" @click="login">{{this.$store.state.login.login_text}}</div>
@@ -205,7 +205,7 @@
             } else {
                 this.$store.state.login.login_text = '登录'
             }
-
+            this.$store.state.head.p = 'static'
         },
         components:{
             Headline,
@@ -231,6 +231,12 @@
                     return
                 }
                 this.$store.commit('loginState',{flag:1})
+            },
+            go_album(item){
+                this.$router.push({
+                    path : '/album',
+                    query:{id:item.id}
+                })
             }
         },
         filters:{

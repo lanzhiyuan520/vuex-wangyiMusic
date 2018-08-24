@@ -169,7 +169,6 @@ export default {
         [types.CURRENTPAGE]:(state,{val})=>{
             state.offset = val
             state.currentPageNum = val+1
-
             axios(`${URL}/comment/playlist?id=${state.song_id}&offset=${(state.offset)*20}&limit=20`)
                 .then(res=>{
                     Loading.service().close();
@@ -205,6 +204,13 @@ export default {
             axios(`${URL}/music/url?id=${id}`)
                 .then(res=>{
                     commit(types.PLAY_MUSIC,res.data.data[0])
+                })
+        },
+        collect:({commit},{id,flag})=>{
+            console.log(id,flag);
+            axios(`${URL}/playlist/subscribe?t=${flag}&id=${id}`)
+                .then(res=>{
+                    console.log(res)
                 })
         }
     }

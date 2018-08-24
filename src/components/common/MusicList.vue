@@ -58,7 +58,7 @@
 <script>
     import {mapState,mapMutations,mapGetters,mapActions} from 'vuex'
     export default {
-        props:['music'],
+        props:['music','flag'],
         methods:{
             play_music(item){
                 // this.$store.state.seniority.music_info = item

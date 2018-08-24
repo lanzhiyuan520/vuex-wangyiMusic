@@ -49,6 +49,7 @@
             this.$store.state.head.children_active = 10
             this.mv_data(this.$route.query.id)
             this.$store.state.playmv.currentPageNum = 1
+            this.$store.state.head.p = 'static'
         },
         computed:{
             ...mapState({

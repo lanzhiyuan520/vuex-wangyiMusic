@@ -42,7 +42,8 @@ export default {
         ],
         children_show:false,
         children_active : 0,
-        parent_active : 0
+        parent_active : 0,
+        p : 'static'
     },
     mutations:{
         show_children:(state,status)=>{

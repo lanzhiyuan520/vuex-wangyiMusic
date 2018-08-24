@@ -1,5 +1,5 @@
 <template>
-    <div class="header-wrap">
+    <div class="header-wrap" :style="{position:this.$store.state.head.p}">
         <div class="header-content">
             <h1 class="logo"></h1>
             <ul class="header-nav-list">
@@ -20,7 +20,7 @@
                 <div class="user-img" v-if="this.$store.state.login.login">
                     <img :src="this.$store.state.login.login.profile.avatarUrl">
                     <div class="menu">
-                        <div>切换账号</div>
+                        <div @click="change_login">切换账号</div>
                         <div @click="quit_login">退出</div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                     this.$router.push(path)
                     this.$store.commit('change_parent_tab',index)
                 } else {
-                    window.location.href = path
+                    window.open(path)
                 }
 
             },
@@ -73,6 +73,9 @@
             },
             quit_login(){
                 this.$store.commit('quit_login')
+            },
+            change_login(){
+                this.$store.commit('change_login')
             }
         },
         components:{

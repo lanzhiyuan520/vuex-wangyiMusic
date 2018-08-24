@@ -52,7 +52,7 @@
                                 </span>
                             </span>
                             <span class="add-icon"></span>
-                            <span class="collect-icon">
+                            <span class="collect-icon" @click="collect">
                                 <span class="collect-icon2">({{state.seniority.subscribedCount}})</span>
                             </span>
                             <span class="share-icon">
@@ -95,11 +95,12 @@
     import Comment from '../common/comments'
     export default {
         mounted(){
+            var {active_seniority_num,seniority_id,flag} = this.$store.state.seniority
             Loading.service({text:'加载中...'});
             //显示子菜单
             this.$store.commit('show_children',true)
             //默认请求数据
-            this.$store.dispatch('featureList',{index:0,id:3,flag:1})
+            this.$store.dispatch('featureList',{index:active_seniority_num,id:seniority_id?seniority_id:3,flag:flag?flag:1})
             this.$store.state.head.children_active = 1
         },
         computed:{
@@ -120,6 +121,10 @@
             play_music(){
                 this.$store.state.common.music_info = this.$store.state.seniority.seniority.tracks[0]
                 this.$store.dispatch('play_music',{id:this.$store.state.seniority.seniority.tracks[0].id})
+            },
+            collect(){
+                console.log(this.$store.state.seniority.seniority.id)
+                this.$store.dispatch('collect',{id:this.$store.state.seniority.seniority.id,flag:1})
             }
         },
         components:{

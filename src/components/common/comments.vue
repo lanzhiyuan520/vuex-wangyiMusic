@@ -10,11 +10,11 @@
         </div>
         <div class="comment-box">
             <div class="comment-content-wrap">
-                <img src="http://s4.music.126.net/style/web2/img/default/default_avatar.jpg?param=50y50" class="comment-icon" />
-                <textarea class="comment-content" placeholder="评论"></textarea>
+                <img :src="this.$store.state.login.login?this.$store.state.login.login.profile.avatarUrl:'http://s4.music.126.net/style/web2/img/default/default_avatar.jpg?param=50y50'" class="comment-icon" />
+                <textarea class="comment-content" placeholder="评论" @focus="_focus" @input="c_content" :value="state.comment_content"></textarea>
             </div>
             <div class="comment-btn-wrap">
-                <div class="comment-btn">评论</div>
+                <div class="comment-btn" @click="c_submit">评论</div>
             </div>
         </div>
         <div class="comment-item-wrap">
@@ -31,7 +31,7 @@
                     <div class="like">
                         <div class="comment-time">{{item.time}}</div>
                         <div class="like-wrap">
-                            <span class="like-icon"></span>
+                            <span class="like-icon" @click="_like"></span>
                             <span class="like-num">（{{item.likedCount}}）</span>
                         </div>
                     </div>
@@ -61,10 +61,35 @@
 </template>
 
 <script>
+    import {mapState} from 'vuex'
     export default {
         props:['comments','commentCount','hotcomments'],
-        mounted(){
-            console.log(this.comments)
+        computed:{
+            ...mapState({
+                state:state=>state.common
+            })
+        },
+        methods:{
+            _focus(){
+                var userInfo = JSON.parse(localStorage.getItem('userInfo'||[]))
+                if (!userInfo){
+                    this.$store.commit('loginState',{flag:1})
+                }
+            },
+            c_content(e){
+                this.$store.commit('comment_content',{val:e.target.value})
+            },
+            c_submit(){
+                var userInfo = JSON.parse(localStorage.getItem('userInfo'||[]))
+                if (!userInfo){
+                    this.$store.commit('loginState',{flag:1})
+                    return
+                }
+                this.$store.commit('c_submit')
+            },
+            _like(){
+                this.$store.commit('disabled')
+            }
         }
     }
 </script>

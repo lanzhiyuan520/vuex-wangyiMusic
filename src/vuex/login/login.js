@@ -1,6 +1,7 @@
 import axios from 'axios'
 const URL  = 'http://localhost:3000'
 import { Loading ,Notification} from 'element-ui';
+import store from '../index'
 export default {
     state : {
         checked : false,
@@ -38,9 +39,9 @@ export default {
         },
         login_success:(state,{data})=>{
             state.login = data
+            localStorage.setItem('userInfo',JSON.stringify(state.login))
             if (state.checked) {
                 var pass = window.btoa(state.pass)
-                console.log(pass)
                 var data = {
                     phone : state.phone,
                     pass
@@ -48,6 +49,7 @@ export default {
                 localStorage.setItem('login',JSON.stringify(data))
             }
             state.login_text = '已登录'
+            store.dispatch('my_music_list',{id:data.account.id})
         },
         loginState:(state,{flag})=>{
             if (flag){
@@ -60,11 +62,19 @@ export default {
             state.login = false
             state.login_text = '登录'
             localStorage.removeItem('login')
+            localStorage.removeItem('userInfo')
             Notification({
                 title : ' 退出成功',
                 type : 'success',
                 duration : '2000'
             })
+        },
+        change_login:(state)=>{
+            state.login = false
+            state.login_text = '登录'
+            localStorage.removeItem('login')
+            localStorage.removeItem('userInfo')
+            state.state = true
         }
     },
     actions : {

@@ -49,7 +49,6 @@
                 this.$store.dispatch('hot_song',{offset:val})
             },
             go_album(item){
-                console.log(item)
                 this.$router.push({
                     path : '/album',
                     query:{id:item.id}

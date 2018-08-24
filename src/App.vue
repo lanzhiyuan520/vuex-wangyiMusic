@@ -17,11 +17,14 @@ import Login from './components/common/login'
 export default {
     mounted(){
         var data = JSON.parse(localStorage.getItem('login' || []))
-        if (data){
-            var pass = window.atob(data.pass)
-            this.$store.state.login.phone = data.phone
-            this.$store.state.login.pass = pass
-            this.$store.dispatch('login')
+        var userInfo = JSON.parse(localStorage.getItem('userInfo' || []))
+        if (userInfo){
+            // var pass = window.atob(data.pass)
+            // this.$store.state.login.phone = data.phone
+            // this.$store.state.login.pass = pass
+            // this.$store.dispatch('login')
+            this.$store.state.login.login = userInfo
+            this.$store.state.login.login_text = '已登录'
         }
     },
     computed:{
@@ -112,5 +115,12 @@ export default {
   }
   .translate2{
     transform: translateY(90%);
+  }
+  .el-collapse-item__header{
+    background: transparent;
+    padding-left: 20px;
+  }
+  .el-collapse-item__content{
+    padding-bottom: 0;
   }
 </style>
