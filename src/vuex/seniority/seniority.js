@@ -2,6 +2,7 @@ import * as types from './types'
 import axios from 'axios'
 const URL  = 'http://localhost:3000'
 import { Loading } from 'element-ui';
+import store from '../index'
 export default {
     state : {
         seniority_list:[
@@ -136,6 +137,7 @@ export default {
     },
     mutations : {
         [types.FEATURELIST]:(state,{index,id,flag,data})=>{
+            store.state.common.songs = data.tracks
             state.song_id = data.id
             state.seniority_id = id
             state.flag = flag

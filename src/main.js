@@ -8,6 +8,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import filters from './components/tools/filters'
 import VueLazyload from 'vue-lazyload'
+import VueAplayer from 'vue-aplayer'
 Object.keys(filters).forEach(key=>Vue.filter(key,filters[key]))
 Vue.use(VueLazyload, {
     preLoad: 0.5,
@@ -18,6 +19,7 @@ Vue.use(VueLazyload, {
 Vue.use(ElementUI);
 Vue.config.productionTip = false
 import VideoPlayer from 'vue-video-player'
+window.VueAplayer = VueAplayer
 require('video.js/dist/video-js.css')
 require('vue-video-player/src/custom-theme.css')
 Vue.use(VideoPlayer)

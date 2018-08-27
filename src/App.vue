@@ -3,7 +3,8 @@
     <router-view/>
     <div class="play-music-wrap" :class="state.translate">
       <div class="play-content">
-        <VueAplayer ref="au" autoplay v-if="state.music_info.result " :music='state.music_data' @ended="fun"></VueAplayer>
+        <VueAplayer ref="au" @playing="fun2" autoplay v-if="state.music_info.result " :music='state.music_data' @ended="fun"></VueAplayer>
+        <!--<VueAplayer ref="au" autoplay v-if="state.music_info.result " :music='state.au[0]' :list="state.au" @ended="fun"></VueAplayer>-->
       </div>
     </div>
     <Login v-if="this.$store.state.login.state"></Login>
@@ -14,6 +15,7 @@
 import VueAplayer from 'vue-aplayer'
 import {mapState} from 'vuex'
 import Login from './components/common/login'
+import axios from 'axios'
 export default {
     mounted(){
         var data = JSON.parse(localStorage.getItem('login' || []))
@@ -34,12 +36,7 @@ export default {
     },
     methods:{
         fun(){
-            console.log(this.$refs.au)
-            var index = this.$store.state.common.index
-            console.log(this.$store.state.common.songs.songs)
-            var id = this.$store.state.common.songs.songs[index+1].id
-            console.log(id)
-            this.$store.dispatch('play_music',{id,index:index+1})
+            this.$refs.au.play()
         }
     },
     components:{
@@ -50,6 +47,9 @@ export default {
 </script>
 
 <style lang="less">
+  .aplayer-list{
+    /*display: none;*/
+  }
   .play-music-wrap{
     position: fixed;
     left: 0;

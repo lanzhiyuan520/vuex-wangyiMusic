@@ -2,6 +2,7 @@ import axios from 'axios'
 import * as types from "../seniority/types";
 import {Notification} from "element-ui";
 const URL  = 'http://localhost:3000'
+import store from '../index'
 export default {
     state : {
         music_info:{},
@@ -12,13 +13,13 @@ export default {
         search_v : '',
         music_list:[],
         index : 0,
-        songs : []
+        songs : [],
+        au : []
     },
     mutations : {
         play_music:(state,{data,index})=>{
             state.music_info.result = data
             state.index = index
-            console.log(state.music_info)
             state.translate = 'translate'
             if (state.music_info.artists){
                 state.music_data = {
@@ -35,7 +36,6 @@ export default {
                     pic : state.music_info.al.picUrl
                 }
             }
-
             setTimeout(()=>{
                 state.translate = 'translate2'
             },2000)
@@ -66,6 +66,15 @@ export default {
         },
         change_text:(state,{val})=>{
             state.search_v = val
+        },
+        play_music2:(state,{data,index})=>{
+            console.log(data)
+            state.music_data = {
+                title : state.songs[index].name,
+                author : state.songs[index].ar[0].name,
+                src : data.url,
+                pic : state.songs[index].al.picUrl
+            }
         }
     },
     actions : {
@@ -79,6 +88,12 @@ export default {
             axios(`${URL}/search?keywords=${keywords}`)
                 .then(res=>{
                     commit('search',{data:res.data.result})
+                })
+        },
+        play_music2:({commit},{id,index})=>{
+            axios(`${URL}/music/url?id=${id}`)
+                .then(res=>{
+                    commit('play_music2',{data:res.data.data[0],index})
                 })
         }
     }

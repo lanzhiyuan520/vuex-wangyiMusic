@@ -26,7 +26,7 @@
                 </div>
             </div>
             <ul class="seniority-list-box" v-if="!flag">
-                <li v-for="(item,index) in music.tracks" :class="index%2==0?'active-bgc2':''">
+                <li v-for="(item,index) in music.tracks" @click="play_music(item,index)" :class="index%2==0?'active-bgc2':''">
                     <div class="song-index-wrap">
                         <span class="song-index">{{index+1}}</span>
                         <div class="song-icon-wrap">
