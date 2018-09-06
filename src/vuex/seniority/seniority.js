@@ -137,6 +137,7 @@ export default {
     },
     mutations : {
         [types.FEATURELIST]:(state,{index,id,flag,data})=>{
+            console.log(data)
             store.state.common.songs = data.tracks
             state.song_id = data.id
             state.seniority_id = id
