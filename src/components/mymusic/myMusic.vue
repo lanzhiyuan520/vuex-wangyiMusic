@@ -43,6 +43,7 @@
     import {mapState,mapMutations,mapGetters,mapActions} from 'vuex'
     import {UserInfo} from '../common/tools'
     import Music from '../common/MusicList'
+    import { Loading } from 'element-ui';
     export default {
         name: "my-music",
         mounted(){
@@ -52,7 +53,6 @@
             this.$store.commit('d_height')
             this.$store.state.head.p = 'fixed'
             if (userInfo){
-                console.log(userInfo)
                 this.$store.dispatch('my_music_list',{id:userInfo.account.id})
             }
         },
@@ -73,7 +73,7 @@
 
             },
             change_list(id){
-                console.log(id)
+                Loading.service({text:'加载中...'});
                 this.$store.dispatch('MusicList',{id})
             }
         }

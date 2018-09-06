@@ -47,12 +47,16 @@ export default {
             })
             result = Math.max(...arr)
             state.playerOptions.sources[0].src = data.brs[result]
-            console.log(state.playerOptions)
         },
-        mvcomments:(state,{data})=>{
+        mvcomments:(state,{data,val})=>{
             state.comments = data.comments
             state.commentCount = data.total
             Loading.service().close();
+            if (val != 1){
+                window.scrollTo(0,158)
+            }else{
+                window.scrollTo(0,0)
+            }
         },
         video_top:(state,{flag})=>{
             if (flag){
@@ -75,7 +79,7 @@ export default {
         mv_comments:({commit},{id,offset})=>{
             axios(`${URL}/comment/mv?id=${id}&offset=${(offset-1)*20}&limit=20`)
                 .then(res=>{
-                    commit('mvcomments',{data:res.data})
+                    commit('mvcomments',{data:res.data,val:offset})
                 })
         }
     }

@@ -3,7 +3,7 @@
     <router-view/>
     <div class="play-music-wrap" :class="state.translate">
       <div class="play-content">
-        <VueAplayer ref="au" @playing="fun2" autoplay v-if="state.music_info.result " :music='state.music_data' @ended="fun"></VueAplayer>
+        <VueAplayer ref="au" autoplay v-if="state.music_info.result " :music='state.music_data' @ended="fun"></VueAplayer>
         <!--<VueAplayer ref="au" autoplay v-if="state.music_info.result " :music='state.au[0]' :list="state.au" @ended="fun"></VueAplayer>-->
       </div>
     </div>

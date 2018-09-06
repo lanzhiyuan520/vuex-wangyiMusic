@@ -67,7 +67,6 @@
             },
             handleScroll(e){
                 var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                console.log(scrollTop)
                 if (scrollTop > 156){
                     this.$store.commit('video_top',{flag:1})
                 }else{

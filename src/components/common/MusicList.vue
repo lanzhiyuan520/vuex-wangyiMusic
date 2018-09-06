@@ -26,7 +26,7 @@
                 </div>
             </div>
             <ul class="seniority-list-box" v-if="!flag">
-                <li v-for="(item,index) in music.tracks" @click="play_music(item,index)" :class="index%2==0?'active-bgc2':''">
+                <li v-for="(item,index) in music.tracks" @click.stop @click="play_music(item,index)" :class="index%2==0?'active-bgc2':''">
                     <div class="song-index-wrap">
                         <span class="song-index">{{index+1}}</span>
                         <div class="song-icon-wrap">
@@ -36,7 +36,7 @@
                     <div class="song-play-box">
                         <div class="play-icon" @click="play_music(item,index)"></div>
                         <div class="play-text">{{item.name}}</div>
-                        <div class="mv-icon" v-if="item.mv!=0" @click="play_mv(item)"></div>
+                        <div class="mv-icon" v-if="item.mv!=0" @click.stop @click="play_mv(item)" style="position: relative;z-index: 10"></div>
                     </div>
                     <div class="song-duration-box">
                         <span class="song-duration-text">{{item.dt | time}}</span>
@@ -53,7 +53,7 @@
                 </li>
             </ul>
             <ul class="seniority-list-box" v-if="flag">
-                <li v-for="(item,index) in music.songs" :class="index%2==0?'active-bgc2':''">
+                <li v-for="(item,index) in music.songs" @click="play_music(item,index)" :class="index%2==0?'active-bgc2':''">
                     <div class="song-index-wrap">
                         <span class="song-index">{{index+1}}</span>
                         <div class="song-icon-wrap">
@@ -63,7 +63,7 @@
                     <div class="song-play-box">
                         <div class="play-icon" @click="play_music(item,index)"></div>
                         <div class="play-text">{{item.name}}</div>
-                        <div class="mv-icon" v-if="item.mvid!=0" @click="play_mv(item)"></div>
+                        <div class="mv-icon" v-if="item.mvid!=0" @click.stop @click="play_mv(item)"></div>
                     </div>
                     <div class="song-duration-box">
                         <span class="song-duration-text">{{item.duration | time}}</span>

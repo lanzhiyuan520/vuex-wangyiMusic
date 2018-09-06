@@ -14,7 +14,6 @@ export default {
             Loading.service().close();
             state.songdetail = data
             state.commentCount = data.commentCount
-            console.log(data)
         },
         songComments:(state,{data})=>{
             state.comments = data.comments
@@ -32,7 +31,6 @@ export default {
         song_comments:({commit},{id,offset})=>{
             axios(`${URL}/comment/playlist?id=${id}&offset=${(offset-1)*20}&limit=20`)
                 .then(res=>{
-                    console.log(offset,res)
                     commit('songComments',{data:res.data})
                 })
         }

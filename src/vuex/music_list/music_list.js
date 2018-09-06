@@ -20,6 +20,7 @@ export default {
             state.title = tag
             state.play_lists = data
             Loading.service().close();
+            window.scrollTo(0,0)
         }
     },
     actions:{

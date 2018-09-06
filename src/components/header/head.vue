@@ -100,6 +100,7 @@
     .header-wrap{
         width: 100%;
         background-color: #242424;
+        z-index: 20;
     }
     .header-content{
         width: 1100px;

@@ -13,6 +13,7 @@ export default {
             state.total = parseInt(data.total)
             state.song_list = data.albums
             Loading.service().close();
+            window.scrollTo(0,0)
         }
     },
     actions:{

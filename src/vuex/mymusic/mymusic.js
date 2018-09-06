@@ -30,7 +30,8 @@ export default {
             store.dispatch('MusicList',{id:state.my_list[0].id})
         },
         music_list:(state,{data})=>{
-           state.my_musicList = data
+            Loading.service().close();
+            state.my_musicList = data
         }
     },
     actions : {
@@ -42,10 +43,8 @@ export default {
                  })
         },
         MusicList:({commit},{id})=>{
-            console.log(id)
             axios(`${URL}/playlist/detail?id=${id}`)
                 .then(res=>{
-                    console.log(res)
                     commit('music_list',{data:res.data.playlist})
                 })
         }
